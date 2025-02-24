@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Link } from 'expo-router';
+import { Link, useNavigation } from 'expo-router';
 
 interface MenuItemProps {
     icon: keyof typeof Ionicons.glyphMap;
@@ -9,6 +9,15 @@ interface MenuItemProps {
   }
 
 const AccountScreen = () => {
+
+
+      const navigation = useNavigation();
+    
+      useEffect(() => {
+        navigation.setOptions({ title: 'Profile' });  // Set custom title
+      }, [navigation]);
+
+
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
@@ -19,7 +28,7 @@ const AccountScreen = () => {
             <Text style={styles.phone}>+7 909 686 73 45</Text>
           </View>
         </View>
-        <Link href="/authentication/editprofile" asChild>
+        <Link href="/authentication/edit" asChild>
         <Ionicons name="chevron-forward" size={24} color="black" />
         </Link>
       </View>

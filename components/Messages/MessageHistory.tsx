@@ -1,7 +1,16 @@
-import React from "react";
+import { useNavigation } from "expo-router";
+import React, { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 
 const MessagesHistory = () => {
+
+    const navigation = useNavigation();
+  
+    useEffect(() => {
+      navigation.setOptions({ title: 'Message History' });  // Set custom title
+    }, [navigation]);
+  
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>

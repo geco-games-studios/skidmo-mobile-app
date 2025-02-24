@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
-import { Link } from 'expo-router';
+import { Link, useNavigation } from 'expo-router';
 
 const WishlistNotification = () => {
+
+    const navigation = useNavigation();
+  
+    useEffect(() => {
+      navigation.setOptions({ title: 'Wishlist' });  // Set custom title
+    }, [navigation]);
+  
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -12,7 +20,7 @@ const WishlistNotification = () => {
       <Text style={styles.subtitle}>
         You can communicate with the vendors to find out more information
       </Text>
-      <Link href="/wishlist/wishlist" asChild>
+      <Link href="/Wishlist/wishlist" asChild>
         <TouchableOpacity style={styles.loginButton}>
             <Text style={styles.loginButtonText}>Log in</Text>
         </TouchableOpacity>

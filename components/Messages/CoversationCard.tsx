@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet, FlatList } from "react-native";
+import { useNavigation } from 'expo-router';
 
 const listings = [
   {
@@ -29,6 +30,14 @@ const listings = [
 ];
 
 const ConversationCard = () => {
+
+    const navigation = useNavigation();
+  
+    useEffect(() => {
+      navigation.setOptions({ title: 'Chat' });  // Set custom title
+    }, [navigation]);
+  
+
   return (
     <View style={styles.container}>
       <FlatList

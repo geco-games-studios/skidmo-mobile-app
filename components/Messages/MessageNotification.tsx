@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
-import { Link } from 'expo-router';
+import { Link, useNavigation } from 'expo-router';
 
 const MessagesNotification = () => {
+
+    const navigation = useNavigation();
+  
+    useEffect(() => {
+      navigation.setOptions({ title: 'Messages' });  // Set custom title
+    }, [navigation]);
+  
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>

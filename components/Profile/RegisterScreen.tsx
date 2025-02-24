@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from 'expo-router';
 
 const SignUpScreen = () => {
+
+
+      const navigation = useNavigation();
+    
+      useEffect(() => {
+        navigation.setOptions({ title: 'Signup' });  // Set custom title
+      }, [navigation]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign up</Text>

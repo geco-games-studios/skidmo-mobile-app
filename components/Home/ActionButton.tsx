@@ -1,18 +1,22 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { Home, Lamp } from "lucide-react-native"
+// import { Home, Lamp } from "lucide-react-native"
+import Feather from '@expo/vector-icons/Feather';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 export function ActionButtons() {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button}>
         <View style={styles.iconContainer}>
-          <Lamp style={styles.icon} />
+          {/* <Lamp style={styles.icon} /> */}
+          <MaterialCommunityIcons name="lamp-outline" size={24} color="#16a34a" />
         </View>
         <Text style={styles.buttonText}>Rent</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
         <View style={styles.iconContainer}>
-          <Home style={styles.icon} />
+          {/* <Home style={styles.icon} /> */}
+          <Feather name="home" size={24} color="#16a34a" />
         </View>
         <Text style={styles.buttonText}>Buy</Text>
       </TouchableOpacity>

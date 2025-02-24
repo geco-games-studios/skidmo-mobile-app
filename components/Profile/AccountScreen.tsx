@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
+import { useNavigation } from 'expo-router';
 
 const ProfileScreen = () => {
+
+    const navigation = useNavigation();
+    
+    useEffect(() => {
+        navigation.setOptions({ title: 'Account' });  // Set custom title
+      }, [navigation]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
       <Text style={styles.subtitle}>Log in to your account to book, sell or buy real estate</Text>
       
-      <Link href="/authentication/login" asChild>
+      <Link href="/authentication/signin/" asChild>
         <TouchableOpacity style={styles.loginButton}>
             <Text style={styles.loginText}>Log in</Text>
         </TouchableOpacity>

@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Link } from 'expo-router';
+import { Link, useNavigation } from 'expo-router';
 
 const LoginScreen = () => {
+
+  
+  const navigation = useNavigation();
+    
+  useEffect(() => {
+        navigation.setOptions({ title: 'Signin' });  // Set custom title
+      }, [navigation]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Log in</Text>
@@ -12,7 +20,7 @@ const LoginScreen = () => {
       <TextInput style={styles.input} placeholder="Phone number" placeholderTextColor="#BDBDBD" keyboardType="phone-pad" />
       
       <Text style={styles.signupText}>Don't have an account? 
-        <Link href="/authentication/register" asChild>
+        <Link href="/authentication/signup" asChild>
           <Text style={styles.signupLink}>Sign up</Text>
         </Link>
       </Text>

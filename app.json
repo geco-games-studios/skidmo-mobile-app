@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "skidmo",
+    "name": "Skidmo",
     "slug": "skidmo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo/1.png",
-    "scheme": "myapp",
+    "scheme": "skidmo",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "ios": {
       "supportsTablet": true
     },

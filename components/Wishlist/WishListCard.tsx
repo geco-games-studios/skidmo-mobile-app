@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from "react-native";
 // import Icon from "react-native-vector-icons/Ionicons";
+
+import { useNavigation } from 'expo-router';
 
 
 const hotels = [
@@ -11,7 +13,7 @@ const hotels = [
     price: "K440",
     rating: 4.9,
     reviews: 1899,
-    image: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/123456789.jpg", 
+    image: require("@/assets/appartments/1.jpg"),
   },
   {
     id: "2",
@@ -20,7 +22,7 @@ const hotels = [
     price: "K388",
     rating: 4.8,
     reviews: 78,
-    image: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/987654321.jpg", // Replace with an actual image URL
+    image: require("@/assets/appartments/1.jpg"),
   },
   {
     id: "2",
@@ -29,7 +31,7 @@ const hotels = [
     price: "K388",
     rating: 4.8,
     reviews: 78,
-    image: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/987654321.jpg", // Replace with an actual image URL
+    image: require("@/assets/appartments/1.jpg"),
   },
   {
     id: "2",
@@ -38,11 +40,18 @@ const hotels = [
     price: "K388",
     rating: 4.8,
     reviews: 78,
-    image: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/987654321.jpg", // Replace with an actual image URL
+    image: require("@/assets/appartments/1.jpg"),
   },
 ];
 
 const WishlistScreen = () => {
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({ title: 'Wishlist' });  // Set custom title
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -50,7 +59,7 @@ const WishlistScreen = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <Image source={{ uri: item.image }} style={styles.image} />
+            <Image source={item.image} style={styles.image} />
             <TouchableOpacity style={styles.heartIcon}>
               {/* <Icon name="heart-outline" size={24} color="green" /> */}
             </TouchableOpacity>

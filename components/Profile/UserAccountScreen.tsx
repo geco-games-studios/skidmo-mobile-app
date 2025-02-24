@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from 'expo-router';
 
 const EditProfileScreen = () => {
   const [name, setName] = useState('Alevtina');
   const [phone, setPhone] = useState('+79096867345');
   const [email, setEmail] = useState('aaalv@gmail.com');
+
+  const navigation = useNavigation();
+    
+      useEffect(() => {
+        navigation.setOptions({ title: 'Edit Account' });  // Set custom title
+      }, [navigation]);
 
   return (
     <View style={styles.container}>
