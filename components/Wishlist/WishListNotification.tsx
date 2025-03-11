@@ -20,7 +20,7 @@ const WishlistNotification = () => {
       <Text style={styles.subtitle}>
         You can communicate with the vendors to find out more information
       </Text>
-      <Link href="/Wishlist/wishlist" asChild>
+      <Link href="/Wishlist/" asChild>
         <TouchableOpacity style={styles.loginButton}>
             <Text style={styles.loginButtonText}>Log in</Text>
         </TouchableOpacity>

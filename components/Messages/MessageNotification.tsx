@@ -20,7 +20,7 @@ const MessagesNotification = () => {
       <Text style={styles.subtitle}>
         You can communicate with the vendors to find out more information
       </Text>
-      <Link href="/messages/conversations" asChild>
+      <Link href="/conversation/" asChild>
         <TouchableOpacity style={styles.loginButton}>
           <Text style={styles.loginButtonText}>Log in</Text>
         </TouchableOpacity>
