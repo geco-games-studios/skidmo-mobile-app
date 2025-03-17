@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, StyleSheet, FlatList } from 'react-native';
 import { ActionButtons } from "@/components/Home/ActionButton";
 import { PropertyCardScreen } from "@/components/Home/PropertyCard";
-import { SearchBar } from "@/components/Home/SearchBar";
+import SearchFilterModal from '@/components/ActiveSearchBar';
 
 const Properties = [
   {
@@ -69,8 +69,7 @@ export default function Home() {
 
   return (
     <ScrollView style={styles.container}>
-      <SearchBar />
-      <ActionButtons />
+      <SearchFilterModal/>
       <View style={styles.listingsContainer}>
         <Text style={styles.listingsTitle}>Recent listings</Text>
         <FlatList
