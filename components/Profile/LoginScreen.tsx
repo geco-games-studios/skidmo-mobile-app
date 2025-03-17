@@ -1,78 +1,146 @@
-import React, { useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Link, useNavigation } from 'expo-router';
+import { Link, useNavigation, useRouter } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ownerAPI } from '@/services/api';
 
 const LoginScreen = () => {
-
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   
   const navigation = useNavigation();
+  const router = useRouter();
     
   useEffect(() => {
-        navigation.setOptions({ title: 'Signin' });  // Set custom title
-      }, [navigation]);
+    navigation.setOptions({ title: 'Signin' });  // Set custom title
+    
+    // Check if user is already logged in
+    const checkAuth = async () => {
+      const isAuthenticated = await ownerAPI.isAuthenticated();
+      if (isAuthenticated) {
+        router.push('/authentication/account');
+      }
+    };
+    
+    checkAuth();
+  }, [navigation, router]);
+
+  const handleLogin = async () => {
+    // Basic validation
+    if (!username.trim() || !password.trim()) {
+      Alert.alert('Error', 'Please enter both username and password');
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      // Make login request using ownerAPI service
+      const data = await ownerAPI.login(username, password);
+      
+      // Store tokens in AsyncStorage
+      if (data.access && data.refresh) {
+        await AsyncStorage.setItem('access_token', data.access);
+        await AsyncStorage.setItem('refresh_token', data.refresh);
+        
+        // Set global access token for axios interceptors
+        (global as any).access_token = data.access;
+        
+        // Navigate to account page
+        router.push('/authentication/account');
+      } else {
+        Alert.alert('Login Error', 'Invalid response from server');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      Alert.alert(
+        'Login Error', 
+        'Failed to login. Please check your credentials and try again.'
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Social login handlers
+  const handleSocialLogin = (provider: string) => {
+    Alert.alert('Info', `${provider} login not implemented yet`);
+    // Here you would implement the specific social login logic
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Log in</Text>
       
-      <TextInput style={styles.input} placeholder="Name" placeholderTextColor="#BDBDBD" />
-      <TextInput style={styles.input} placeholder="Phone number" placeholderTextColor="#BDBDBD" keyboardType="phone-pad" />
+      <TextInput 
+        style={styles.input} 
+        placeholder="Username" 
+        placeholderTextColor="#BDBDBD"
+        value={username}
+        onChangeText={setUsername}
+      />
       
-      <Text style={styles.signupText}>Don't have an account? 
+      <TextInput 
+        style={styles.input} 
+        placeholder="Password" 
+        placeholderTextColor="#BDBDBD" 
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+      
+      <Text style={styles.signupText}>
+        Don't have an account?{' '}
         <Link href="/authentication/signup" asChild>
           <Text style={styles.signupLink}>Sign up</Text>
         </Link>
       </Text>
       
-      <Link href="/authentication/account" asChild>
-        <TouchableOpacity style={styles.continueButton}>
+      <TouchableOpacity 
+        style={styles.continueButton}
+        onPress={handleLogin}
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <ActivityIndicator color="white" />
+        ) : (
           <Text style={styles.continueText}>Continue</Text>
-        </TouchableOpacity>
-      </Link>
+        )}
+      </TouchableOpacity>
       
-      <TouchableOpacity style={styles.socialButton}>
+      <TouchableOpacity 
+        style={styles.socialButton}
+        onPress={() => handleSocialLogin('Email')}
+      >
         <Ionicons style={styles.socialIcon} name="mail-outline" size={20} color="black" />
         <Text style={styles.socialText}>Continue with Email</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.socialButton}>
+      <TouchableOpacity 
+        style={styles.socialButton}
+        onPress={() => handleSocialLogin('Facebook')}
+      >
         <Ionicons style={styles.socialIcon} name="logo-facebook" size={20} color="blue" />
         <Text style={styles.socialText}>Continue with Facebook</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.socialButton}>
+      <TouchableOpacity 
+        style={styles.socialButton}
+        onPress={() => handleSocialLogin('Google')}
+      >
         <Ionicons style={styles.socialIcon} name="logo-google" size={20} color="red" />
         <Text style={styles.socialText}>Continue with Google</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.socialButton}>
+      <TouchableOpacity 
+        style={styles.socialButton}
+        onPress={() => handleSocialLogin('Apple')}
+      >
         <Ionicons style={styles.socialIcon} name="logo-apple" size={20} color="black" />
         <Text style={styles.socialText}>Continue with Apple</Text>
       </TouchableOpacity>
-      
-      {/* <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="home-outline" size={24} color="black" />
-          <Text style={styles.navText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="search-outline" size={24} color="black" />
-          <Text style={styles.navText}>Explore</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="heart-outline" size={24} color="black" />
-          <Text style={styles.navText}>Wishlists</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="chatbubble-outline" size={24} color="black" />
-          <Text style={styles.navText}>Messages</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="person-outline" size={24} color="black" />
-          <Text style={styles.navText}>Log in</Text>
-        </TouchableOpacity>
-      </View> */}
     </View>
   );
 };
@@ -117,13 +185,11 @@ const styles = StyleSheet.create({
   },
   socialButton: {
     flexDirection: 'row',
-   
     paddingVertical: 12,
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
     marginLeft: 10,
-    
     justifyContent: 'center',
     textAlign: 'center',
   },
@@ -137,27 +203,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 16,
     alignItems: 'center',
-    
-    
-  },
-  bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 10,
-    borderTopWidth: 1,
-    borderColor: '#ddd',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'white',
-  },
-  navItem: {
-    alignItems: 'center',
-  },
-  navText: {
-    fontSize: 12,
-    color: 'black',
   },
 });
 
