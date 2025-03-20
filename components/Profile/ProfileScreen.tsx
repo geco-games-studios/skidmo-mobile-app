@@ -128,12 +128,34 @@ const ProfileScreen = () => {
       </Modal>
 
       <View style={styles.menu}>
-        <MenuItem icon="list" text="Dashboard" />
-        <MenuItem icon="heart-outline" text="Booking history" />
-        <MenuItem icon="card-outline" text="Payment methods" />
-        <MenuItem icon="help-circle-outline" text="Get help" />
-        <MenuItem icon="settings-outline" text="Settings" />
-        <MenuItem icon="log-out-outline" text="Log out" onPress={handleLogout} />
+        <Link href="/dashboard" asChild>
+          <MenuItem icon="list" text="Dashboard" />
+        </Link>
+        <Link href="/dashboard/bookings" asChild>
+          <TouchableOpacity>
+          <MenuItem icon="heart-outline" text="Booking history" />
+          </TouchableOpacity>
+        </Link>
+        <Link href="" asChild>
+          <TouchableOpacity>
+          <MenuItem icon="card-outline" text="Payment methods" />
+          </TouchableOpacity>
+        </Link>
+        <Link href="" asChild>
+          <TouchableOpacity>
+          <MenuItem icon="help-circle-outline" text="Get help" />
+          </TouchableOpacity>
+        </Link>
+        <Link href="" asChild>
+          <TouchableOpacity>
+          <MenuItem icon="settings-outline" text="Settings" />
+          </TouchableOpacity>
+        </Link>
+        <Link href="" asChild>
+          <TouchableOpacity>
+          <MenuItem icon="log-out-outline" text="Log out" onPress={handleLogout} />
+          </TouchableOpacity>
+        </Link>
       </View>
     </View>
   )

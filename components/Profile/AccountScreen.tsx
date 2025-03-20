@@ -34,33 +34,6 @@ const ProfileScreen = () => {
           <Text style={styles.optionText}>Settings</Text>
         </TouchableOpacity>
       </View>
-      
-      {/* <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="home-outline" size={24} color="black" />
-          <Text style={styles.navText}>Home</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="search-outline" size={24} color="black" />
-          <Text style={styles.navText}>Explore</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="heart-outline" size={24} color="black" />
-          <Text style={styles.navText}>Wishlists</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="chatbubble-outline" size={24} color="black" />
-          <Text style={styles.navText}>Messages</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="person-outline" size={24} color="black" />
-          <Text style={styles.navText}>Log in</Text>
-        </TouchableOpacity>
-      </View> */}
     </View>
   );
 };
