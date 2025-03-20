@@ -31,7 +31,9 @@
           "image": "./assets/images/logo/3.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#ffffff",
+           "photosPermission": "The app needs access to your photos to upload your Documents.",
+          "cameraPermission": "The app needs access to your camera to take photos of your Documents."
         }
       ]
     ],

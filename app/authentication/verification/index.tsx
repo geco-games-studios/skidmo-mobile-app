@@ -1,11 +1,11 @@
 import { StyleSheet, View } from 'react-native'
 import React from 'react'
-import AccountScreen from '@/components/Profile/ProfileScreen'
+import VerificationScreen from '@/components/Profile/VerificationScreen'
 
-export default function Profile() {
+export default function Verification() {
   return (
     <View style={styles.container}>
-        <AccountScreen/>
+        <VerificationScreen/>
     </View>
   )
 }

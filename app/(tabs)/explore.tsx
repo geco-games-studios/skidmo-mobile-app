@@ -10,7 +10,7 @@ import { StatusBar } from "expo-status-bar"
 
 import { propertyListings } from "@/types/propertyData"
 import PropertyCard from "@/components/Explore/PropertyCard"
-import SearchHeader from "@/components/Explore/SearchHeader"
+// import SearchHeader from "@/components/Explore/SearchHeader"
 
 const { width, height } = Dimensions.get("window")
 
@@ -51,7 +51,7 @@ export default function ExploreScreen() {
     <SafeAreaView style={styles.container} edges={["top"]}>
       <StatusBar style="dark" />
 
-      <SearchHeader />
+      {/* <SearchHeader /> */}
 
       <MapView
         provider={PROVIDER_GOOGLE}
