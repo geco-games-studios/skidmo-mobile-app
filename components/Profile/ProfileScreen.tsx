@@ -23,10 +23,12 @@ interface MenuItemProps {
   onPress?: () => void
 }
 
+
 const ProfileScreen = () => {
   const [user, setUser] = useState<UserData | null>(null)
   const [loading, setLoading] = useState(true)
   const [modalVisible, setModalVisible] = useState(false)
+  const [isVerified, setIsVerified] = useState(false) // Track verification status
   const navigation = useNavigation()
   const router = useRouter()
 
@@ -35,47 +37,55 @@ const ProfileScreen = () => {
 
     const fetchUserData = async () => {
       try {
-          const userId = await AsyncStorage.getItem('user_id');
-          if (userId) {
-              const userData = await ownerAPI.getUserInfo(userId);
-              setUser(userData);
+        const userId = await AsyncStorage.getItem('user_id')
+        const verifiedStatus = await AsyncStorage.getItem('is_verified') // Retrieve verification status
+
+        if (verifiedStatus) {
+          setIsVerified(verifiedStatus === 'true') // Convert string to boolean
+        }
+
+        if (userId) {
+          const userData = await ownerAPI.getUserInfo(userId)
+          setUser(userData)
+
+          // If verified, redirect to the list screen
+          if (isVerified) {
+            router.push("/Listings") // Adjust the route as needed
           }
+        }
       } catch (error) {
-          console.error('Error fetching user profile:', error);
+        console.error('Error fetching user profile:', error)
+        Alert.alert("Error", "Failed to fetch user data")
       } finally {
-          // Set loading to false regardless of success or failure
-          setLoading(false);
+        setLoading(false)
       }
-    };
-
-    fetchUserData();
-  }, [navigation])
-
-  const handleLogout = async () => {
-    try {
-      await ownerAPI.logout()
-      // Navigate to login screen or wherever appropriate
-      // This depends on your navigation setup
-    } catch (error) {
-      console.error("Error logging out:", error)
-      Alert.alert("Error", "Failed to log out")
     }
-  }
+
+    fetchUserData()
+  }, [navigation, router, isVerified]) // Add isVerified as a dependency
 
   const handleListProperty = () => {
-    setModalVisible(true)
-  }
+    console.log("List Property button pressed. isVerified:", isVerified); // Debugging output
+  
+    if (isVerified) {
+      // If verified, redirect to the list screen
+      console.log("User is verified. Redirecting to Listings..."); // Debugging output
+      router.push("/Listings"); // Adjust the route as needed
+    } else {
+      // If not verified, show the modal
+      console.log("User is not verified. Showing modal..."); // Debugging output
+      setModalVisible(true);
+    }
+  };
 
   const handleProceed = () => {
     setModalVisible(false)
-    // Navigate to edit profile page
-    router.push("/authentication/edit")
+    router.push("/authentication/edit") // Navigate to edit profile
   }
 
   const handleClickProceed = () => {
     setModalVisible(false)
-    // Navigate to verification screen
-    router.push("/authentication/verification")
+    router.push("/authentication/verification") // Navigate to verification
   }
 
   if (loading) {
@@ -94,7 +104,6 @@ const ProfileScreen = () => {
           <View>
             <Text style={styles.name}>{user?.user_type || "No User"}</Text>
             <Text style={styles.name}>{user?.username || "No User"}</Text>
-            {/* <Text style={styles.phone}>{user?.phone_number || user?.email || ""}</Text> */}
           </View>
         </View>
         <Link href="/authentication/edit" asChild>
@@ -128,34 +137,12 @@ const ProfileScreen = () => {
       </Modal>
 
       <View style={styles.menu}>
-        <Link href="/dashboard" asChild>
-          <MenuItem icon="list" text="Dashboard" />
-        </Link>
-        <Link href="/dashboard/bookings" asChild>
-          <TouchableOpacity>
-          <MenuItem icon="heart-outline" text="Booking history" />
-          </TouchableOpacity>
-        </Link>
-        <Link href="" asChild>
-          <TouchableOpacity>
-          <MenuItem icon="card-outline" text="Payment methods" />
-          </TouchableOpacity>
-        </Link>
-        <Link href="" asChild>
-          <TouchableOpacity>
-          <MenuItem icon="help-circle-outline" text="Get help" />
-          </TouchableOpacity>
-        </Link>
-        <Link href="" asChild>
-          <TouchableOpacity>
-          <MenuItem icon="settings-outline" text="Settings" />
-          </TouchableOpacity>
-        </Link>
-        <Link href="" asChild>
-          <TouchableOpacity>
-          <MenuItem icon="log-out-outline" text="Log out" onPress={handleLogout} />
-          </TouchableOpacity>
-        </Link>
+        <MenuItem icon="list" text="Dashboard" onPress={() => router.push("/dashboard")} />
+        <MenuItem icon="heart-outline" text="Booking history" onPress={() => router.push("/dashboard/bookings")} />
+        <MenuItem icon="card-outline" text="Payment methods" onPress={() => Alert.alert("Info", "Feature coming soon")} />
+        <MenuItem icon="help-circle-outline" text="Get help" onPress={() => Alert.alert("Info", "Feature coming soon")} />
+        <MenuItem icon="settings-outline" text="Settings" onPress={() => Alert.alert("Info", "Feature coming soon")} />
+        <MenuItem icon="log-out-outline" text="Log out"/>
       </View>
     </View>
   )

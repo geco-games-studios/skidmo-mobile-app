@@ -13,11 +13,6 @@ const Dashboard = () => {
     navigation.setOptions({ title: 'Dashboard' });
   }, [navigation]);
 
-  // Handle the back button press
-  const handleGoBack = () => {
-    router.back();
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}

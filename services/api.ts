@@ -209,16 +209,18 @@ export const storeTokens = async (accessToken: string, refreshToken: string) => 
         const decodedToken: any = jwtDecode(accessToken);
         console.log("Decoded Token:", decodedToken); // Debugging output
 
-        const userId = decodedToken.user_id; // Since it's already a number, no need for `.toString()`
+        const userId = decodedToken.user_id; // Assuming user_id is in the token
+        const isVerified = decodedToken.status_verification === "verified"; // Check if status is "verified"
 
-        if (userId === undefined) {
-            throw new Error("User ID not found in token");
+        if (userId === undefined || decodedToken.status_verification === undefined) {
+            throw new Error("User ID or verification status not found in token");
         }
 
-        // Store tokens and user ID securely
+        // Store tokens, user ID, and verification status securely
         await AsyncStorage.setItem('access_token', accessToken);
         await AsyncStorage.setItem('refresh_token', refreshToken);
         await AsyncStorage.setItem('user_id', userId.toString()); // Convert number to string before storing
+        await AsyncStorage.setItem('is_verified', isVerified.toString()); // Store verification status as boolean string
 
         return true;
     } catch (error) {
